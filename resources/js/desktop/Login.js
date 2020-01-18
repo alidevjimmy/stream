@@ -3,11 +3,8 @@ import {makeStyles, Container, Button} from '@material-ui/core'
 import {Alert} from '@material-ui/lab'
 import axios from 'axios'
 import URL from "../url";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {Redirect} from 'react-router-dom'
-// import ReCAPTCHA from "react-google-recaptcha";
 import {Link} from 'react-router-dom'
 
 const useStyle = makeStyles(theme => ({
@@ -69,7 +66,6 @@ const Login = () => {
     const [redirect, setRedirect] = useState(false)
     const [submitLoading , setSubmitLoading] = useState(false)
     const loading = open && options.length === 0;
-
     let errs = [];
     const HandleForm = e => {
         e.preventDefault()
@@ -97,7 +93,14 @@ const Login = () => {
                         if (res.data.status == 'success') {
                             res.data.user['access_token'] = res.data.access_token
                             localStorage.setItem('user', JSON.stringify(res.data.user));
-                            res.data.user.active == 1 ? <Redirect to='/' /> : <Redirect to='/verification'/>
+                            if (res.data.user.active == 1){
+                                sessionStorage.setItem('status' , 'success')
+                                sessionStorage.setItem('message' , 'شما با موفقیت وارد شدید')
+                            }
+                            else {
+                                sessionStorage.setItem('status' , 'success')
+                                sessionStorage.setItem('message' , 'کد فعالسازی برای شما ارسال شد')
+                            }
                         } else {
                             setErrors(res.data.message)
                         }
@@ -115,27 +118,6 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-        let active = true;
-
-        if (!loading) {
-            return undefined;
-        }
-
-        (async () => {
-            const response = await fetch(`${URL}/degrees`);
-            // await sleep(1e3); // For demo purposes.
-            const degrees = await response.json();
-            if (active) {
-                // setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-                setOptions(degrees)
-            }
-        })();
-        return () => {
-            active = false;
-        };
-    }, [loading]);
-
     React.useEffect(() => {
         if (!open) {
             setOptions([]);
@@ -148,6 +130,7 @@ const Login = () => {
 
     return (
         <React.Fragment>
+            {JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).active == 1 ? <Redirect to={localStorage.getItem('redirect')}/> : <Redirect to='/verification'/> : null}
             <Container className={classes.filterContainer} fixed
                        style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
                 <h3 align='center' style={{margin: '10px 5px'}}>ورود</h3>

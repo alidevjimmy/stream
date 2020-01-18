@@ -98,7 +98,7 @@ const FilterBox = () => {
                     <div style={{display: 'flex'}}>
                         {items.map(item => {
                             return (
-                                <FilterButton data={item}/>
+                                <FilterButton data={item} key={item.id}/>
                             )
                         })}
                     </div>

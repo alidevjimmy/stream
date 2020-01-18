@@ -237,6 +237,8 @@ const LoginPaper = () => {
                                         <MenuItem onClick={() => {
                                             localStorage.removeItem('user')
                                             setOpen(false);
+                                            sessionStorage.setItem('status' , 'success')
+                                            sessionStorage.setItem('message' , 'خروج موفقیت آمیز بود')
                                             location.reload()
                                         }} className={['my_font', 'items'].join(' ')}>خروج</MenuItem>
                                     </div> :
@@ -308,9 +310,11 @@ const Header = (props) => {
                                     inputProps={{'aria-label': 'search'}}
                                 />
                             </div>
-                            <IconButton className='on_focus'>
-                                <AddOutlined className="prim_color"/>
-                            </IconButton>
+                            <Link to='addadvertising'>
+                                <IconButton className='on_focus'>
+                                    <AddOutlined className="prim_color"/>
+                                </IconButton>
+                            </Link>
                             <LoginPaper/>
                         </Toolbar>
                     </Container>

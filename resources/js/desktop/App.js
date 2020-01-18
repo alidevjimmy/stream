@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Header'
 import Index from "./Index";
@@ -10,43 +10,25 @@ import {
     BrowserRouter as Router,
     Route,
     Switch,
-    Redirect
 } from 'react-router-dom'
+import axios from "axios";
+import URL from "../url";
+import ShowAd from "./ShowAd";
+import AddAd from "./addAd";
 
-
-function PrivateRouteLogedin ({redirect : redirect,component: Component, authed, ...rest}) {
-    return (
-        <Route
-            {...rest}
-            render={(props) => authed == false
-                ? <Component {...props} />
-                : <Redirect to={{pathname: redirect, state: {from: props.location}}} />}
-        />
-    )
-}
-
-function PrivateRouteLogedinNo ({redirect : redirect,component: Component, authed, ...rest}) {
-    return (
-        <Route
-            {...rest}
-            render={(props) => authed == true
-                ? <Component {...props} />
-                : <Redirect to={{pathname: redirect, state: {from: props.location}}} />}
-        />
-    )
-}
 
 export default function App() {
-    const authed = localStorage.getItem('user') != null ? true : false;
     return (
         <React.Fragment>
             <Router>
                 <Header />
                 <Switch>
-                    <Route path='//' compon ent={Index} />
-                    <PrivateRouteLogedin authed={authed} path='/register' component={Register} redirect='/'/>
-                    <PrivateRouteLogedin authed={authed} path='/login' component={Login} redirect='/'/>
-                    <PrivateRouteLogedinNo authed={authed} path='/verification' component={Verification} redirect='/login'/>
+                    <Route exact path='//' component={Index} />
+                    <Route exact path='/register' component={Register}/>
+                    <Route exact path='/login' component={Login}/>
+                    <Route exact path='/verification' component={Verification}/>
+                    <Route exact path='/addadvertising' component={AddAd}/>
+                    <Route exact path='/advertisings/:id' component={ShowAd}/>
                 </Switch>
             </Router>
         </React.Fragment>

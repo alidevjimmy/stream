@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import '../styles/style.css'
@@ -20,7 +18,8 @@ import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
 import Bookmark from '@material-ui/icons/Bookmark';
 import '../styles/style.css'
 import URL from "../url";
-import Skeleton from '@material-ui/lab/Skeleton'
+import { Link } from 'react-router-dom'
+import Message from "./Message";
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +36,7 @@ const useStyles = makeStyles(theme => ({
         height: 190,
     },
 }));
+
 
 const BookMarkButton = (props) => {
     const classes = useStyles()
@@ -58,7 +58,6 @@ const Index = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-
 
     useEffect(() => {
         axios.get(`${URL}/advertisings`, {
@@ -90,7 +89,7 @@ const Index = () => {
         return (
             <Container fixed className='content_margin' style={{paddingRight: 0, paddingLeft: 0}}>
                 <FilterBox/>
-                <br/>
+                <br/>t
                 <center>
                     <IconButton style={{backgroundColor: '#ff9100', color: 'white'}} color="inherit">
                         <Refresh/>
@@ -102,52 +101,55 @@ const Index = () => {
         return (
                 <Container fixed className='content_margin' style={{paddingRight: 0, paddingLeft: 0}}>
                     <FilterBox/>
+                    <Message />
                     <Grid container className={classes.root} spacing={0}>
 
                         {items.map(item => {
                                 return (
-                                    <Grid key={item.id} item xs={12} md={3} sm={6}>
-                                        <Card className={classes.card}>
-                                            <CardHeader
-                                                title={
-                                                    <Typography variant='h6' component='h6'
-                                                                style={{fontWeight: 700, fontSize: '16px'}}>
-                                                        {item.title.substring(0, 21) + '...'}
-                                                    </Typography>
-                                                }
-                                                subheader={
-                                                    <Typography component='span'
-                                                                style={{
-                                                                    fontWeight: 500,
-                                                                    fontSize: '12px',
-                                                                    color: '#8e8e8e'
-                                                                }}>
-                                                        دقیقه پیش{item.created_at}
-                                                    </Typography>
-                                                }
-                                                className='my_font'
-                                            />
-                                            {/*<CardMedia*/}
-                                            {/*    className={classes.media}*/}
-                                            {/*    image={}*/}
-                                            {/*    title={item.title}*/}
-                                            {/*/>*/}
-                                            <Skeleton variant='rect' style={{height: '200px'}}/>
-                                            <CardContent>
-                                                {item.type == 'فروشی' ? ` ${item.price} هزار تومان ` : ` ${item.type}`}
-                                            </CardContent>
-                                            <CardActions disableSpacing>
-                                                <div style={{
-                                                    width: '100%',
-                                                    backgroundColor: '#e8e8e8',
-                                                    height: '1px',
-                                                }}></div>
+                                   <Grid key={item.id} item xs={12} md={3} sm={6}>
+                                            <Card className={classes.card}>
+                                                <Link to={`/advertisings/${item.id}`} style={{ textDecoration: 'none' }}>
+                                                    <CardHeader
+                                                        title={
+                                                            <Typography variant='h6' component='h6' className='title_color'
+                                                                        style={{fontWeight: 700, fontSize: '16px'}}>
+                                                                {item.title.substring(0, 21) + '...'}
+                                                            </Typography>
+                                                        }
+                                                        subheader={
+                                                            <Typography component='span'
+                                                                        style={{
+                                                                            fontWeight: 500,
+                                                                            fontSize: '12px',
+                                                                            color: '#8e8e8e'
+                                                                        }}>
+                                                                دقیقه پیش{item.created_at}
+                                                            </Typography>
+                                                        }
+                                                        className='my_font'
+                                                    />
+                                                    <CardMedia
+                                                        style={{ backgroundPosition : 'unset' }}
+                                                        className={classes.media}
+                                                        image={`/image/${item.images[0]}`}
+                                                        title={item.title}
+                                                    />
+                                                </Link>
+                                                <CardContent>
+                                                    {item.type == 'فروشی' ? ` ${item.price} هزار تومان ` : ` ${item.type}`}
+                                                </CardContent>
+                                                <CardActions disableSpacing>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        backgroundColor: '#e8e8e8',
+                                                        height: '1px',
+                                                    }}></div>
 
-                                                <BookMarkButton data={item}/>
+                                                    <BookMarkButton data={item}/>
 
-                                            </CardActions>
-                                        </Card>
-                                    </Grid>
+                                                </CardActions>
+                                            </Card>
+                                        </Grid>
                                 )
                             }
                         )}

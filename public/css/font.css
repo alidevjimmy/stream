@@ -40,3 +40,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield;
 }
+
+/**:focus{*/
+/*    color: #ff6f00;*/
+/*}*/

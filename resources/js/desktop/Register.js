@@ -134,6 +134,8 @@ const Register = () => {
                             if (res.data.status == 'success'){
                                 res.data.user['access_token'] = res.data.access_token
                                 localStorage.setItem('user' , JSON.stringify(res.data.user));
+                                sessionStorage.setItem('status' , 'success')
+                                sessionStorage.setItem('message' , 'کد تایید برای شما ارسال شد')
                             }
                         }
                     })
@@ -148,6 +150,7 @@ const Register = () => {
     }
 
     useEffect(() => {
+
         let active = true;
 
         if (!loading) {
@@ -180,6 +183,7 @@ const Register = () => {
 
     return (
         <React.Fragment>
+            {JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).active == 1 ? <Redirect to={localStorage.getItem('redirect')}/> : <Redirect to='/verification'/> : null}
             <Container className={classes.filterContainer} fixed
                        style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
                 <h3 align='center' style={{margin: '10px 5px'}}>ثبت نام</h3>

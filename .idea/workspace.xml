@@ -2,25 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4ebab6b-29e9-4e0b-9aea-4857060b2633" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/desktop/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/desktop/Verification.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/getUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/ImageURL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/desktop/Message.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/desktop/ShowAd.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/desktop/addAd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/stream.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stream.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Degree.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Degree.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/AdvertisingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/AdvertisingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/DegreeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/DegreeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/VerificationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_01_11_191544_create_verifications_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_01_11_191544_create_verifications_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/font.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/font.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/desktop/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/FilterBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/FilterBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/desktop/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/desktop/Index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/desktop/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/Verification.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Verification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/styles/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,6 +183,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
       <path value="$PROJECT_DIR$/vendor/kavenegar/php" />
+      <path value="$PROJECT_DIR$/vendor/gumlet/php-image-resize" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
     </include_path>
   </component>
   <component name="ProjectId" id="1VC9w1udmaLY26mJuub6fVWCfhc" />
@@ -201,19 +208,19 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/css" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/fonts" />
       <recent name="$PROJECT_DIR$/resources/js/styles" />
       <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$" />
       <recent name="D:\Codes\Projects\stream\resources\lang" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/css" />
     </key>
   </component>
   <component name="RunManager">
@@ -273,6 +280,12 @@
       <workItem from="1578955038277" duration="6687000" />
       <workItem from="1579003077779" duration="10845000" />
       <workItem from="1579014027028" duration="10540000" />
+      <workItem from="1579077819060" duration="17410000" />
+      <workItem from="1579107185727" duration="5944000" />
+      <workItem from="1579156291042" duration="12168000" />
+      <workItem from="1579288102669" duration="72000" />
+      <workItem from="1579374239026" duration="371000" />
+      <workItem from="1579374629185" duration="7717000" />
     </task>
     <servers />
   </component>
@@ -293,6 +306,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="683" y="344" width="610" height="416" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579109093649">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="683" y="344" width="610" height="416" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1579109093649" />
     <state x="745" y="73" width="476" height="958" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1578676880815">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -321,33 +338,33 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="645" y="350" width="687" height="405" key="NewPhpClassDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578773528524" />
-    <state x="471" y="306" key="SettingsEditor" timestamp="1578052632846">
+    <state x="526" y="148" key="SettingsEditor" timestamp="1579111581409">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="471" y="306" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1578052632846" />
-    <state x="648" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1579014181929">
+    <state x="526" y="148" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1579111581409" />
+    <state x="648" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1579374656264">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="648" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1579014181928" />
-    <state x="560" y="162" width="857" height="781" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578680139950">
+    <state x="648" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1579374656264" />
+    <state x="560" y="162" width="857" height="781" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579377723201">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="560" y="162" width="857" height="781" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1578680139950" />
-    <state x="760" y="467" width="457" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579009206204">
+    <state x="560" y="162" width="857" height="781" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1579377723200" />
+    <state x="760" y="467" width="457" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579374658385">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="760" y="467" width="457" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1579009206204" />
+    <state x="760" y="467" width="457" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1579374658385" />
     <state x="630" y="125" width="727" height="855" key="find.popup" timestamp="1578938520372">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="630" y="125" width="727" height="855" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1578938520372" />
-    <state x="657" y="253" key="run.anything.popup" timestamp="1578387785263">
+    <state x="657" y="253" key="run.anything.popup" timestamp="1579378101129">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="657" y="253" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1578387785263" />
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1579032577168">
+    <state x="657" y="253" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579378101129" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1579382091699">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579032577168" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579382091699" />
   </component>
 </project>

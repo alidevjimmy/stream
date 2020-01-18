@@ -25,7 +25,7 @@ class AuthController extends Controller
         $access_token = $user->createToken('authToken')->accessToken;
 
         $verify = new VerificationController();
-        $verify->send($user);
+        $verify->send2($user);
         return response()->json(['status' => 'success','codeStatus' => 'success', 'user' => $user, 'access_token' => $access_token]);
     }
 
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         $access_token = auth()->user()->createToken('authToken')->accessToken;
         $verify = new VerificationController();
-        $verify->send(auth()->user());
+        $verify->send2(auth()->user());
         return response(['status' => 'success', 'user' => auth()->user(), 'access_token' => $access_token]);
     }
 

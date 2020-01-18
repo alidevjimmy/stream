@@ -18,6 +18,7 @@ class CreateVerificationsTable extends Migration
             $table->string('code' , 4);
             $table->unsignedBigInteger('user_id');
             $table->dateTime('expire');
+            $table->boolean('used');
             $table->timestamps();
         });
     }

@@ -59,3 +59,10 @@
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.title_color{
+    color : #333;
+}
+.title_color:focus{
+    color : #ff6f00 !important;
+}
