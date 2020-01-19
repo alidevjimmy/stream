@@ -13,7 +13,7 @@ class VerificationController extends Controller
 {
     public function send(Request $request)
     {
-        $lastCode = Verification::where('user_id' , $request->user()->id)->latest()->first();
+        $lastCode = Verification::where('user_id', $request->user()->id)->latest()->first();
         if ($lastCode) {
             $time = strtotime($lastCode->expire) - strtotime(Carbon::now());
             if ($time > 0) {
@@ -59,13 +59,13 @@ class VerificationController extends Controller
 
     public function send2($user)
     {
-        $lastCode = Verification::where('user_id' , $user->user()->id)->latest()->first();
+        $lastCode = Verification::where('user_id', $user->id)->latest()->first();
         if ($lastCode) {
             $time = strtotime($lastCode->expire) - strtotime(Carbon::now());
             if ($time > 0) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => ' شما ' . $time . ' ثانیه دیگر می توانید درخواست ارسال کنید '
+                    'message' => ' شما ' . $time . ' ثانیه دیگر می توانید درخواست ارسال  کنید '
                 ]);
             }
         }
@@ -120,8 +120,8 @@ class VerificationController extends Controller
                 $active_user = User::where('id', $user->id)->update([
                     'active' => 1,
                 ]);
-                Verification::where('id' , $check->id)->update([
-                   'used' => 1
+                Verification::where('id', $check->id)->update([
+                    'used' => 1
                 ]);
                 if ($active_user) {
                     return response()->json([
@@ -129,8 +129,7 @@ class VerificationController extends Controller
                         'message' => 'حساب کاربری شما با موفقیت تایید شد'
                     ]);
                 }
-            }
-            else{
+            } else {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'کد تایید منقضی شده است!'
@@ -142,6 +141,26 @@ class VerificationController extends Controller
                 'message' => 'کد تایید نادرست است!'
             ]);
         }
+    }
 
+    public function changePhone(Request $request)
+    {
+        $validateData = $this->validate($request, [
+            'phone' => 'required|regex:/(09)[0-9]{9}/|unique:users'
+        ]);
+        if ($request->user()->active != 1) {
+            $update = User::where('id', $request->user()->id)->update([
+                'phone' => $validateData['phone']
+            ]);
+            $this->send2($request->user());
+            return response()->json([
+                'status' => 'success',
+                'message' => 'شماره شما تغییر کرد و کد تایید نیز ارسال شد'
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'حساب کاربری شما فعال است'
+        ]);
     }
 }

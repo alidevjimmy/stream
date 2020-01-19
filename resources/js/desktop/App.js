@@ -15,6 +15,7 @@ import axios from "axios";
 import URL from "../url";
 import ShowAd from "./ShowAd";
 import AddAd from "./addAd";
+import ChangePhone from "./ChangePhone";
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
                     <Route exact path='/verification' component={Verification}/>
                     <Route exact path='/addadvertising' component={AddAd}/>
                     <Route exact path='/advertisings/:id' component={ShowAd}/>
+                    <Route exact path='/changephone' component={ChangePhone}/>
                 </Switch>
             </Router>
         </React.Fragment>

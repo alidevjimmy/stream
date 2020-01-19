@@ -32,5 +32,6 @@ Route::group(['namespace' => 'Api'] , function(){
         Route::post('/sendcode' , 'VerificationController@send')->middleware('auth:api');
         Route::get('/degrees' , 'DegreeController@show');
         Route::post('/verification' , 'VerificationController@check')->middleware('auth:api');
+        Route::post('/changephone' , 'VerificationController@changephone')->middleware('auth:api');
     });
 });

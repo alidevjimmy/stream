@@ -56,26 +56,24 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
-const Verification = () => {
+const ChangePhone = () => {
     const classes = useStyle()
     const [errors, setErrors] = useState('')
     const [successes, setSuccesses] = useState('')
-    const [code, setCode] = useState(null)
+    const [phone, setPhone] = useState(JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).phone : null)
     const [submitLoading, setSubmitLoading] = useState(false)
     const [submitLoadingAgain, setSubmitLoadingAgain] = useState(false)
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [redirect , setRedirect] = useState(false)
 
     let errs = []
     const HandleForm = e => {
         e.preventDefault()
         errs = []
-        if (code == null) {
-            setCode('')
-        }
-        if (code != null && code != '') {
+        if (phone != null && phone != '') {
             setSubmitLoading(true)
-            axios.post(`${URL}/verification`, {
-                code: code
+            axios.post(`${URL}/changephone`, {
+                phone: phone
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,10 +83,11 @@ const Verification = () => {
                 .then(res => {
                     if (res.status == 200) {
                         if (res.data.status == 'success') {
-                            user.active = 1
+                            user.phone = phone
                             localStorage.setItem('user', JSON.stringify(user))
                             sessionStorage.setItem('status', 'success')
-                            sessionStorage.setItem('message', 'حساب کاربری شما با موفقیت تایید شد')
+                            sessionStorage.setItem('message', 'شماره شما تغییر کرد و کد تایید نیز ارسال شد')
+                            setRedirect(true)
                         } else {
                             setErrors(res.data.message)
                         }
@@ -106,35 +105,15 @@ const Verification = () => {
         }
     }
 
-    const sendAgain = () => {
-        axios.post(`${URL}/sendcode` , {} , {
-            headers : {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem('user')).access_token}`
-            }
-        }).then(res => {
-            if (res.data.status == 'success'){
-                setSuccesses(res.data.message)
-                setErrors('')
-            }else {
-                setErrors(res.data.message)
-                setSuccesses('')
-            }
-            setSubmitLoadingAgain(false)
-        }).catch(err => {
-            // console.log(`err = ${err}`)
-            setSubmitLoadingAgain(false)
-        })
-    }
-
     if (user != null) {
         if (user.active == 0) {
             return (
                 <React.Fragment>
+                    {redirect ? <Redirect to='/verification' /> : null}
                     <Message/>
                     <Container className={classes.filterContainer} fixed
                                style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
-                        <h3 align='center' style={{margin: '10px 5px'}}>تایید حساب کاربری</h3>
+                        <h3 align='center' style={{margin: '10px 5px'}}>تغییر شماره</h3>
                         {
                             errors.length > 0 ? <div><Alert severity="error">
                                 <ul>
@@ -150,14 +129,12 @@ const Verification = () => {
                             </Alert><br/></div> : <div></div>
                         }
                         <form className={classes.root} noValidate autoComplete="off">
-                            <input type="number" style={{textAlign: 'center', fontSize: '18px'}}
-                                   className={code != '' ? classes.textBox : classes.textFieldErr}
+                            <input type="text"
+                                   className={phone != '' ? classes.textBox : classes.textFieldErr}
+                                   value={phone}
                                    onChange={e => {
-                                       setCode(e.target.value)
-                                   }} placeholder="-- -- -- --"/>
-                            <small style={{ fontSize : '12px' , fontWeight : 'bold' , color : '#8e8e8e' }}>
-                                کد تایید برای شماره <small style={{ fontSize : '12px' , fontWeight : 'bold' , color : '#ff6f00' }}> { JSON.parse(localStorage.getItem('user')).phone } </small> ارسال خواهد شد
-                            </small>
+                                       setPhone(e.target.value)
+                                   }} placeholder='شماره تلفن خود را وارد کنید'/>
                             <Button
                                 onClick={e => HandleForm(e)}
                                 type='submit'
@@ -165,52 +142,23 @@ const Verification = () => {
                                 style={{
                                     backgroundColor: '#ff9100',
                                     color: 'white',
+
                                     fontWeight: 700,
                                     width: '95%'
                                 }}>
                                 {submitLoading ? <CircularProgress
-                                    style={{color: 'white', width: '25px', height: '25px'}}/> : 'تایید'}
+                                    style={{color: 'white', width: '25px', height: '25px'}}/> : 'اعمال تغییر'}
                             </Button>
 
-                            {/*<Button*/}
-                            {/*    style={{color: '#ff9100', width: '95%', marginTop: '10px', textDecoration: 'underline'}}*/}
-                            {/*    color="inherit">ارسال مجدد*/}
-                            {/*    onClick={sendAgain}*/}
-                            {/*</Button>*/}
-
-                            {/*/////////////////////////////////// CHANGE NUMBER ///////////////////////////////////////*/}
-
                         </form>
-                        <br/>
-                        <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
-                        <div style={{ display : 'flex' }}>
-                            <Button
-                                disabled={submitLoadingAgain ? true : false}
-                                onClick={() => sendAgain()}
-                                style={{color: '#8e8e8e', width: '50%', marginTop: '10px' , fontWeight : 'bold',fontSize:'14px'}}
-                                color="inherit">
-                                {submitLoadingAgain ? <CircularProgress
-                                    style={{color: '#8e8e8e', width: '25px', height: '25px'}}/> : 'درخواست کد جدید'}</Button>
-                            <div style={{ width : '1px',height:'100%',backgroundColor : '#efefef' }}></div>
-                            <Link to='/changephone' style={{ textDecoration : 'none',fontWeight : 'bold',fontSize:'14px', width : '50%' }}>
-                                <Button style={{
-                                    color: '#8e8e8e',
-                                    width: '100%',
-                                    marginTop: '10px',
-                                    fontWeight : 'bold',fontSize:'14px'
-                                }}
-                                        color="inherit">تغییر شماره</Button>
-                            </Link>
-                        </div>
                     </Container>
 
                 </React.Fragment>
             )
         }
         return <Redirect to={localStorage.getItem('redirect')}/>
-
     }
     return <Redirect to='/login'/>
 }
 
-export default Verification
+export default ChangePhone
