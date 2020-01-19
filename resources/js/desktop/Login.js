@@ -132,8 +132,10 @@ const Login = () => {
         <React.Fragment>
             {JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).active == 1 ? <Redirect to={localStorage.getItem('redirect')}/> : <Redirect to='/verification'/> : null}
             <Container className={classes.filterContainer} fixed
-                       style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
+                       style={{marginTop: '60px', marginBottom: '5px', width: '400px'}}>
                 <h3 align='center' style={{margin: '10px 5px'}}>ورود</h3>
+                <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
+                <br/>
                 {
                     errors.length > 0 ? <div><Alert severity="error">
                         <ul>
@@ -169,10 +171,18 @@ const Login = () => {
                         {submitLoading ? <CircularProgress style={{ color : 'white' , width : '25px' , height : '25px'}} /> : 'ورود'}
                     </Button>
                     <br/>
-                    <Link to='/register'>
-                        <Button style={{color: '#ff9100', width: '95%', marginTop: '10px', textDecoration: 'underline'}}
-                                color="inherit">حساب کاربری ندارید؟ ثبت نام کنید</Button>
-                    </Link>
+                    <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
+                    <div style={{ width : '95%' }}>
+                        <Link to='/register' style={{ textDecoration : 'none',fontWeight : 'bold',fontSize:'14px', width : '100%' }}>
+                            <Button style={{
+                                color: '#8e8e8e',
+                                width: '100%',
+                                marginTop: '10px',
+                                fontWeight : 'bold',fontSize:'14px'
+                            }}
+                                    color="inherit">حساب کاربری ندارید؟ ثبت نام کنید</Button>
+                        </Link>
+                    </div>
                 </form>
             </Container>
         </React.Fragment>

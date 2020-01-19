@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4ebab6b-29e9-4e0b-9aea-4857060b2633" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/desktop/ChangePhone.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/v100/VerificationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/desktop/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/ChangePhone.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/ChangePhone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/desktop/Verification.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/Verification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/desktop/addAd.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/desktop/addAd.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,6 +271,7 @@
       <workItem from="1579374239026" duration="371000" />
       <workItem from="1579374629185" duration="7717000" />
       <workItem from="1579417573975" duration="3759000" />
+      <workItem from="1579462767120" duration="5128000" />
     </task>
     <servers />
   </component>
@@ -326,10 +328,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="526" y="148" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1579111581409" />
-    <state x="648" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1579417803114">
+    <state x="648" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1579462770848">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="648" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1579417803114" />
+    <state x="648" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1579462770848" />
     <state x="560" y="162" width="857" height="781" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579377723201">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -346,9 +348,9 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="657" y="253" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579378101129" />
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1579420723363">
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1579466685533">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579420723363" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1579466685533" />
   </component>
 </project>

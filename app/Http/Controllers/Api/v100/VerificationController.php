@@ -107,7 +107,6 @@ class VerificationController extends Controller
 
     public function check(Request $request)
     {
-
         $this->validate($request, [
             'code' => 'required'
         ]);

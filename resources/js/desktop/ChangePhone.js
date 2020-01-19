@@ -114,6 +114,8 @@ const ChangePhone = () => {
                     <Container className={classes.filterContainer} fixed
                                style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
                         <h3 align='center' style={{margin: '10px 5px'}}>تغییر شماره</h3>
+                        <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
+                        <br/>
                         {
                             errors.length > 0 ? <div><Alert severity="error">
                                 <ul>

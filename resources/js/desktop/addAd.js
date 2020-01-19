@@ -7,6 +7,10 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import {Redirect} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import Message from "./Message";
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+// import ImagesUploader from 'react-images-uploader';
+
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -63,15 +67,20 @@ const AddAd = () => {
     const [category_id, setCategory_id] = useState(null)
     const [address, setAddress] = useState(null)
     const [price, setPrice] = useState(null)
-    const [type, setType] = useState(null)
     const [images, setImages] = useState([])
     const [errors, setErrors] = useState([])
-    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////regist////////////////
     const [open, setOpen] = useState('');
     const [options, setOptions] = useState([]);
     const [submitLoading, setSubmitLoading] = useState(false)
     const loading = open && options.length === 0;
+    const [checked, setChecked] = React.useState(false);
     let errs = [];
+
+    const handleChange = event => {
+        setChecked(event.target.checked);
+    };
+
     const HandleForm = e => {
         e.preventDefault()
         errs = []
@@ -90,13 +99,9 @@ const AddAd = () => {
         if (price == null) {
             setPrice('')
         }
-        if (type == null) {
-            setType('')
-        }
         if (title != null && title != '' &&
             description != null && description != '' &&
             price != null && price != '' &&
-            type != null && type != '' &&
             category_id != null && category_id != '' &&
             address != null && address != ''
         ) {
@@ -106,8 +111,8 @@ const AddAd = () => {
                 description: description,
                 category_id: category_id,
                 address: address,
-                price: price,
-                type: type,
+                price: checked ? '' : price,
+                type: checked ? 'توافقی' : 'فروشی',
                 images: images
             }, {
                 headers: {
@@ -143,12 +148,86 @@ const AddAd = () => {
     }, [open]);
 
     if (localStorage.getItem('user')) {
+        if (JSON.parse(localStorage.getItem('user')).active == 1) {
+            return (
+                <React.Fragment>
+                    <Message/>
+                    <Container fixed
+                               style={{marginTop: '60px', marginBottom: '10px'}}>
+                        <Grid container spacing={2}>
+                            <Grid className={classes.filterContainer} item lg>
+                                <h3 align='center' style={{margin: '10px 5px'}}>مشخصات</h3>
+                                <div style={{width: '100%', height: '1px', backgroundColor: '#efefef'}}></div>
+                                <br/>
+                                {
+                                    errors.length > 0 ? <div><Alert severity="error">
+                                        <ul>
+                                            {errors}
+                                        </ul>
+                                    </Alert><br/></div> : <div></div>
+                                }
+                                <form className={classes.root} noValidate autoComplete="off">
+                                    <span style={title != '' ? {color: '#8e8e8e'} : {color: '#ef5662'}}>عنوان</span>
+                                    <input type="text" className={title != '' ? classes.textBox : classes.textFieldErr}
+                                           onChange={e => {
+                                               setTitle(e.target.value)
+                                           }} placeholder="عنوان را وارد کنید..."/>
+                                    <div style={{display: 'flex'}}>
+                                        <span style={{color: '#8e8e8e', marginTop: '10px'}}>قیمت : </span>
+                                        <Checkbox
+                                            checked={checked}
+                                            onChange={handleChange}
+                                            value="primary"
+                                            style={{color: '#ff9100'}}
+                                            color='default'
+                                        />
+                                        <span style={{color: '#333', fontSize: '12px', marginTop: '14px'}}>توافقی</span>
+                                    </div>
+                                    {!checked ? <input type="number"
+                                                       className={price != '' ? classes.textBox : classes.textFieldErr}
+                                                       onChange={e => {
+                                                           setPrice(e.target.value)
+                                                       }} placeholder="قیمت را وارد کنید..."/> : null}
+                                    <span
+                                        style={description != '' ? {color: '#8e8e8e'} : {color: '#ef5662'}}>توضیحات</span>
+                                    <textarea rows='5'
+                                              className={description != '' ? classes.textBox : classes.textFieldErr}
+                                              onChange={e => {
+                                                  setDescription(e.target.value)
+                                              }} placeholder="توضیحات را وارد کنید...">
+                    </textarea>
+                                    <Button
+                                        onClick={e => HandleForm(e)}
+                                        type='submit'
+                                        disabled={submitLoading ? true : false}
+                                        style={{
+                                            backgroundColor: '#ff9100',
+                                            color: 'white',
+                                            fontWeight: 700,
+                                            width: '95%'
+                                        }}>
+                                        {submitLoading ? <CircularProgress
+                                            style={{color: 'white', width: '25px', height: '25px'}}/> : 'ثبت آگهی'}
+                                    </Button>
+                                </form>
+                            </Grid>
+                            <Grid className={classes.filterContainer} item lg>
+                                <h3 align='center' style={{margin: '10px 5px'}}>افزودن تصویر</h3>
+                                <div style={{width: '100%', height: '1px', backgroundColor: '#efefef'}}></div>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </React.Fragment>
+            )
+        }
         return (
             <React.Fragment>
-                <Message />
+                <Message/>
                 <Container className={classes.filterContainer} fixed
-                           style={{marginTop: '60px', marginBottom: '10px'}}>
+                           style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
                     <h3 align='center' style={{margin: '10px 5px'}}>ثبت آگهی</h3>
+                    <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
+                    <br/>
                     {
                         errors.length > 0 ? <div><Alert severity="error">
                             <ul>
@@ -156,43 +235,33 @@ const AddAd = () => {
                             </ul>
                         </Alert><br/></div> : <div></div>
                     }
-                    <form className={classes.root} noValidate autoComplete="off">
-                        <span style={title != '' ? {color: '#8e8e8e'} : {color: '#ef5662'}}>عنوان</span>
-                        <input type="text" className={title != '' ? classes.textBox : classes.textFieldErr}
-                               onChange={e => {
-                                   setTitle(e.target.value)
-                               }} placeholder="عنوان را وارد کنید..."/>
-                        <span style={description != '' ? {color: '#8e8e8e'} : {color: '#ef5662'}}>توضیحات</span>
-                        <textarea rows='5' className={description != '' ? classes.textBox : classes.textFieldErr}
-                                  onChange={e => {
-                                      setDescription(e.target.value)
-                                  }} placeholder="توضیحات را وارد کنید...">
-
-                    </textarea>
+                    <Link to='/verification' style={{textDecoration: 'none'}}>
                         <Button
-                            onClick={e => HandleForm(e)}
+                            onClick={localStorage.setItem('redirect', '/addadvertising')}
                             type='submit'
                             disabled={submitLoading ? true : false}
                             style={{
                                 backgroundColor: '#ff9100',
                                 color: 'white',
                                 fontWeight: 700,
-                                width: '95%'
+                                width: '95%',
                             }}>
                             {submitLoading ? <CircularProgress
-                                style={{color: 'white', width: '25px', height: '25px'}}/> : 'ثبت آگهی'}
+                                style={{color: 'white', width: '25px', height: '25px'}}/> : 'برای ثبت آگهی باید حساب کاربری خود را فعال کنید'}
                         </Button>
-                    </form>
+                    </Link>
                 </Container>
             </React.Fragment>
         )
     }
     return (
         <React.Fragment>
-            <Message />
+            <Message/>
             <Container className={classes.filterContainer} fixed
-                       style={{marginTop: '60px', marginBottom: '10px' , width : '400px'}}>
+                       style={{marginTop: '60px', marginBottom: '10px', width: '400px'}}>
                 <h3 align='center' style={{margin: '10px 5px'}}>ثبت آگهی</h3>
+                <div style={{ width : '100%',height:'1px',backgroundColor : '#efefef' }}></div>
+                <br/>
                 {
                     errors.length > 0 ? <div><Alert severity="error">
                         <ul>
@@ -200,9 +269,9 @@ const AddAd = () => {
                         </ul>
                     </Alert><br/></div> : <div></div>
                 }
-                <Link to='/login' style={{textDecoration : 'none'}}>
+                <Link to='/login' style={{textDecoration: 'none'}}>
                     <Button
-                        onClick={localStorage.setItem('redirect' , '/addadvertising')}
+                        onClick={localStorage.setItem('redirect', '/addadvertising')}
                         type='submit'
                         disabled={submitLoading ? true : false}
                         style={{
@@ -218,6 +287,6 @@ const AddAd = () => {
             </Container>
         </React.Fragment>
     )
-}
+    }
 
-export default AddAd
+    export default AddAd
