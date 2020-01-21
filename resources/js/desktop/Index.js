@@ -89,7 +89,7 @@ const Index = () => {
         return (
             <Container fixed className='content_margin' style={{paddingRight: 0, paddingLeft: 0}}>
                 <FilterBox/>
-                <br/>t
+                <br/>
                 <center>
                     <IconButton style={{backgroundColor: '#ff9100', color: 'white'}} color="inherit">
                         <Refresh/>
@@ -123,7 +123,7 @@ const Index = () => {
                                                                             fontSize: '12px',
                                                                             color: '#8e8e8e'
                                                                         }}>
-                                                                دقیقه پیش{item.created_at}
+                                                                 {item.date} پیش
                                                             </Typography>
                                                         }
                                                         className='my_font'
@@ -131,12 +131,12 @@ const Index = () => {
                                                     <CardMedia
                                                         style={{ backgroundPosition : 'unset' }}
                                                         className={classes.media}
-                                                        image={`/image/${item.images[0]}`}
+                                                        image={item.images.length > 0 ? `/image/${item.images[0]}` : '/images/photo_2020-01-12_00-46-00.png'}
                                                         title={item.title}
                                                     />
                                                 </Link>
                                                 <CardContent>
-                                                    {item.type == 'فروشی' ? ` ${item.price} هزار تومان ` : ` ${item.type}`}
+                                                    {item.type == 'فروشی' ? ` ${item.price} تومان ` : ` ${item.type}`}
                                                 </CardContent>
                                                 <CardActions disableSpacing>
                                                     <div style={{

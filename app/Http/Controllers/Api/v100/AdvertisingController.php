@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Api\v100;
 
 use App\Advertising;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Morilog\Jalali\Jalalian;
 
 class AdvertisingController extends Controller
 {
     public function index()
     {
         $advertisings = Advertising::latest()->active()->paginate(20);
+        foreach ($advertisings as $ad){
+            $date = strtotime($ad->created_at) - strtotime(Carbon::now());
+            $ad['date'] = Jalalian::forge(strtotime(Carbon::now()) - $date)->ago();
+        }
         return response()->json(['status' => 'success', 'data' => $advertisings]);
     }
 

@@ -26,7 +26,7 @@ class AuthController extends Controller
 
         $verify = new VerificationController();
         $verify->send2($user);
-        return response()->json(['status' => 'success','codeStatus' => 'success', 'user' => $user, 'access_token' => $access_token]);
+        return response()->json(['status' => 'success', 'codeStatus' => 'success', 'user' => $user, 'access_token' => $access_token]);
     }
 
     public function login(Request $request)
@@ -40,8 +40,10 @@ class AuthController extends Controller
         }
 
         $access_token = auth()->user()->createToken('authToken')->accessToken;
-        $verify = new VerificationController();
-        $verify->send2(auth()->user());
+        if ($request->user()->active != 1) {
+            $verify = new VerificationController();
+            $verify->send2(auth()->user());
+        }
         return response(['status' => 'success', 'user' => auth()->user(), 'access_token' => $access_token]);
     }
 

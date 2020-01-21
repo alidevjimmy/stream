@@ -115,6 +115,7 @@ const Register = () => {
             degreeId != null && degreeId != ''
         ) {
             if (password == confirmPass && password >= 6) {
+                setSubmitLoading(true)
                 axios.post(`${URL}/register`, {
                     name: name,
                     family: family,
@@ -133,17 +134,20 @@ const Register = () => {
                         if (res.status == 200) {
                             if (res.data.status == 'success'){
                                 res.data.user['access_token'] = res.data.access_token
+                                res.data.user['active'] = 0
                                 localStorage.setItem('user' , JSON.stringify(res.data.user));
                                 sessionStorage.setItem('status' , 'success')
                                 sessionStorage.setItem('message' , 'کد تایید برای شما ارسال شد')
                             }
                         }
+                        setSubmitLoading(false)
                     })
                     .catch(err => {
                         for (let key in err.response.data.errors) {
                             errs.push(err.response.data.errors[key][0])
                         }
                         setErrors(errs)
+                        setSubmitLoading(false)
                     })
             }
         }
@@ -183,7 +187,7 @@ const Register = () => {
 
     return (
         <React.Fragment>
-            {JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).active == 1 ? <Redirect to={localStorage.getItem('redirect')}/> : <Redirect to='/verification'/> : null}
+            {JSON.parse(localStorage.getItem('user')) ? <Redirect to='/verification'/> : null}
             <Container className={classes.filterContainer} fixed
                        style={{marginTop: '60px', marginBottom: '5px', width: '400px'}}>
                 <h3 align='center' style={{margin: '10px 5px'}}>ثبت نام</h3>

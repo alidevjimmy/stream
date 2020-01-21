@@ -31,19 +31,22 @@ const FilterButton = (props) => {
         setSelected(!selected);
     }
     return (
-        <ToggleButton
-            value="check"
-            selected={selected}
-            onChange={() => handleFilterClick()}
-            className={classes.toggleButton}
-            style={!selected ? {backgroundColor: '#efefef', color: '#333',} : {
-                backgroundColor: '#ff9100',
-                color: 'white'
-            }}
-            key={props.data.id}
-        >
-            {props.data.title}
-        </ToggleButton>
+        <div style={{ display : 'flex'}}>
+            <ToggleButton
+                value="check"
+                selected={selected}
+                onChange={() => handleFilterClick()}
+                className={classes.toggleButton}
+                style={!selected ? {backgroundColor: '#efefef', color: '#333',} : {
+                    backgroundColor: '#ff9100',
+                    color: 'white',
+                }}
+                key={props.data.id}
+            >
+                {props.data.title}
+            </ToggleButton>
+            <div style={{ height : '10px' , width : '10px'}}></div>
+        </div>
     )
 }
 
