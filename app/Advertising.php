@@ -23,6 +23,11 @@ class Advertising extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('active' , 1);

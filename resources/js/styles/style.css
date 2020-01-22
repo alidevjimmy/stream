@@ -2,6 +2,9 @@
     --tenser_back: linear-gradient(to right, #ff6f00, #ff9100);
     --white_back : 'white'
 }
+.orange_color{
+    color : #ff9100;
+}
 
 .white_color {
     color: white !important;

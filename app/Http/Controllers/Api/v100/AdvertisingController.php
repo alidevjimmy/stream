@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v100;
 
 use App\Advertising;
+use App\Bookmark;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,11 +15,26 @@ class AdvertisingController extends Controller
     public function index()
     {
         $advertisings = Advertising::latest()->active()->paginate(20);
-        foreach ($advertisings as $ad){
+        foreach ($advertisings as $ad) {
             $date = strtotime($ad->created_at) - strtotime(Carbon::now());
             $ad['date'] = Jalalian::forge(strtotime(Carbon::now()) - $date)->ago();
         }
         return response()->json(['status' => 'success', 'data' => $advertisings]);
+    }
+
+    public function indexAuth(Request $request)
+    {
+        $bookmarks = $request->user()->bookmarks()->get();
+        $ad_ids = [];
+        foreach ($bookmarks as $bookmark){
+            array_push($ad_ids , $bookmark['advertising_id']);
+        }
+        $advertisings = Advertising::latest()->active()->paginate(20);
+        foreach ($advertisings as $ad) {
+            $date = strtotime($ad->created_at) - strtotime(Carbon::now());
+            $ad['date'] = Jalalian::forge(strtotime(Carbon::now()) - $date)->ago();
+        }
+        return response()->json(['status' => 'success', 'data' => $advertisings , 'bookMarked' => $ad_ids]);
     }
 
     public function show($id)
@@ -26,10 +42,9 @@ class AdvertisingController extends Controller
         $advertising = Advertising::find($id);
 
         if ($advertising != [] && $advertising != '' && $advertising != null) {
-            if ($advertising->active == 1){
+            if ($advertising->active == 1) {
                 return response()->json(['status' => 'success', 'data' => $advertising]);
-            }
-            else{
+            } else {
                 return response()->json(['status' => 'error', 'message' => 'آگهی یافت نشد']);
             }
         }
@@ -64,7 +79,7 @@ class AdvertisingController extends Controller
                         $img->save(public_path('/image/' . $name));
                         $img->resize(400, 200);
                         $img->save(public_path('/image/' . 'themp' . $name));
-                        $images[] = 'themp'.$name;
+                        $images[] = 'themp' . $name;
                         $images[] = $name;
                     } else {
                         $img->save(public_path('/image/' . $name));
@@ -80,8 +95,40 @@ class AdvertisingController extends Controller
             return response()->json(['status' => 'success', 'message' => 'آگهی با موفقیت ثبت شد و پس از تایید نمایش داده می شود']);
         }
         return response()->json([
-           'status' => 'error',
-           'message' => 'برای اضافه کردن آگهی باید حساب کاربری خود را فعال کنید'
+            'status' => 'error',
+            'message' => 'برای اضافه کردن آگهی باید حساب کاربری خود را فعال کنید'
+        ]);
+    }
+
+    public function bookmark(Request $request)
+    {
+        $this->validate($request, [
+            'ad_id' => 'required',
+        ]);
+        $ad = Advertising::findOrFail($request->ad_id);
+        $user = $request->user();
+        Bookmark::create([
+            'user_id' => $user->id,
+            'advertising_id' => $ad->id
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'آگهی نشانه گذاری شد'
+        ]);
+    }
+
+    public function unBookmark(Request $request)
+    {
+        $this->validate($request, [
+            'ad_id' => 'required',
+        ]);
+        $ad = Advertising::findOrFail($request->ad_id);
+        $user = $request->user();
+        Bookmark::where('user_id' , $user->id)->where('advertising_id' , $ad->id)->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'نشانه گذاری حذف شد'
         ]);
     }
 }

@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Adevrtising');
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

@@ -18,8 +18,16 @@ import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
 import Bookmark from '@material-ui/icons/Bookmark';
 import '../styles/style.css'
 import URL from "../url";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Message from "./Message";
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,19 +45,109 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const BookMarkButton = (props) => {
     const classes = useStyles()
-    const [selected, setSelected] = useState(false)
+    const [selected, setSelected] = useState(props.selected)
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleFilterClick = () => {
-        setSelected(!selected);
+        if (localStorage.getItem('user')) {
+            setLoading(true);
+            if (!selected) {
+                axios.post(`${URL}/bookmark`, {
+                    ad_id: props.data.id
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${JSON.parse(localStorage.getItem('user')).access_token}`
+                    }
+                })
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            setLoading(false)
+                            setSelected(true)
+                        }
+                        // else{
+                        //     setLoading(false)
+                        //     sessionStorage.setItem('status' , 'success')
+                        //     sessionStorage.setItem('message' , 'خطای')
+                        // }
+                    })
+                    .catch(err => {
+                        setLoading(false)
+                        console.log('error')
+                    })
+            }
+            else{
+                axios.post(`${URL}/unBookmark`, {
+                    ad_id: props.data.id
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${JSON.parse(localStorage.getItem('user')).access_token}`
+                    }
+                })
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            setLoading(false)
+                            setSelected(false)
+                        }
+                    })
+                    .catch(err => {
+                        setLoading(false)
+                        console.log('error')
+                    })
+            }
+        } else {
+            handleClickOpen()
+            localStorage.setItem('redirect', '/')
+        }
+
     }
 
     return (
-        <IconButton onClick={() => handleFilterClick()} aria-label="نشانه گذاری" className='on_focus'>
-            {!selected ? <BookmarkBorder/> : <Bookmark style={{color: 'rgb(255, 145, 0)'}}/>}
-        </IconButton>
+        <>
+            <IconButton onClick={() => handleFilterClick()} aria-label="نشانه گذاری" className='on_focus'>
+                {loading ? <CircularProgress style={{width: '23px', height: '23px', color: '#8e8e8e'}}/> : selected ?
+                    <Bookmark style={{color: 'rgb(255, 145, 0)'}}/> : <BookmarkBorder/>}
+            </IconButton>
+            <div>
+                <Dialog
+                    open={open}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={() => setOpen(false)}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle id="alert-dialog-slide-title">{"نشانه گذاری آگهی"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            برای نشانه گذاری آگهی باید <Link to='/login' className='orange_color'>وارد
+                            شوید</Link> یا <Link to='/register' className='orange_color'>ثبت نام </Link> کنید.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setOpen(false)} color="inherit" className='orange_color'
+                                style={{fontWeight: 'bold', color: '#ff9100'}}>
+                            بستن
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        </>
     )
 }
 
@@ -58,24 +156,46 @@ const Index = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
+    const [bookMarked, setBookmarked] = useState([])
 
     useEffect(() => {
-        axios.get(`${URL}/advertisings`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => {
-                if (res.data.status == 'success') {
-                    setItems(res.data.data.data)
-                } else {
-                    setFailed(true)
+        if (localStorage.getItem('user')) {
+            axios.get(`${URL}/advertisingsAuth`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem('user')).access_token}`
                 }
-                setLoading(false)
             })
-            .catch(err => {
-                setFailed(true)
+                .then(res => {
+                    if (res.data.status == 'success') {
+                        setItems(res.data.data.data)
+                        setBookmarked(res.data.bookMarked)
+                    } else {
+                        setFailed(true)
+                    }
+                    setLoading(false)
+                })
+                .catch(err => {
+                    setFailed(true)
+                })
+        } else {
+            axios.get(`${URL}/advertisings`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             })
+                .then(res => {
+                    if (res.data.status == 'success') {
+                        setItems(res.data.data.data)
+                    } else {
+                        setFailed(true)
+                    }
+                    setLoading(false)
+                })
+                .catch(err => {
+                    setFailed(true)
+                })
+        }
     }, [])
 
     if (loading) {
@@ -99,63 +219,65 @@ const Index = () => {
         )
     } else {
         return (
-                <Container fixed className='content_margin' style={{paddingRight: 0, paddingLeft: 0}}>
-                    <FilterBox/>
-                    <Message />
-                    <Grid container className={classes.root} spacing={0}>
+            <Container fixed className='content_margin' style={{paddingRight: 0, paddingLeft: 0}}>
+                {/*<LoginAlert/>*/}
+                <FilterBox/>
+                <Message/>
+                <Grid container className={classes.root} spacing={0}>
 
-                        {items.map(item => {
-                                return (
-                                   <Grid key={item.id} item xs={12} md={3} sm={6}>
-                                            <Card className={classes.card}>
-                                                <Link to={`/advertisings/${item.id}`} style={{ textDecoration: 'none' }}>
-                                                    <CardHeader
-                                                        title={
-                                                            <Typography variant='h6' component='h6' className='title_color'
-                                                                        style={{fontWeight: 700, fontSize: '16px'}}>
-                                                                {item.title.substring(0, 21) + '...'}
-                                                            </Typography>
-                                                        }
-                                                        subheader={
-                                                            <Typography component='span'
-                                                                        style={{
-                                                                            fontWeight: 500,
-                                                                            fontSize: '12px',
-                                                                            color: '#8e8e8e'
-                                                                        }}>
-                                                                 {item.date} پیش
-                                                            </Typography>
-                                                        }
-                                                        className='my_font'
-                                                    />
-                                                    <CardMedia
-                                                        style={{ backgroundPosition : 'unset' }}
-                                                        className={classes.media}
-                                                        image={item.images.length > 0 ? `/image/${item.images[0]}` : '/images/photo_2020-01-12_00-46-00.png'}
-                                                        title={item.title}
-                                                    />
-                                                </Link>
-                                                <CardContent>
-                                                    {item.type == 'فروشی' ? ` ${item.price} تومان ` : ` ${item.type}`}
-                                                </CardContent>
-                                                <CardActions disableSpacing>
-                                                    <div style={{
-                                                        width: '100%',
-                                                        backgroundColor: '#e8e8e8',
-                                                        height: '1px',
-                                                    }}></div>
+                    {items.map(item => {
+                            return (
+                                <Grid key={item.id} item xs={12} md={3} sm={6}>
+                                    <Card className={classes.card}>
+                                        <Link to={`/advertisings/${item.id}`} style={{textDecoration: 'none'}}>
+                                            <CardHeader
+                                                title={
+                                                    <Typography variant='h6' component='h6' className='title_color'
+                                                                style={{fontWeight: 700, fontSize: '16px'}}>
+                                                        {item.title.substring(0, 21) + '...'}
+                                                    </Typography>
+                                                }
+                                                subheader={
+                                                    <Typography component='span'
+                                                                style={{
+                                                                    fontWeight: 500,
+                                                                    fontSize: '12px',
+                                                                    color: '#8e8e8e'
+                                                                }}>
+                                                        {item.date} پیش
+                                                    </Typography>
+                                                }
+                                                className='my_font'
+                                            />
+                                            <CardMedia
+                                                style={{backgroundPosition: 'unset'}}
+                                                className={classes.media}
+                                                image={item.images.length > 0 ? `/image/${item.images[0]}` : '/images/photo_2020-01-12_00-46-00.png'}
+                                                title={item.title}
+                                            />
+                                        </Link>
+                                        <CardContent>
+                                            {item.type == 'فروشی' ? ` ${item.price} تومان ` : ` ${item.type}`}
+                                        </CardContent>
+                                        <CardActions disableSpacing>
+                                            <div style={{
+                                                width: '100%',
+                                                backgroundColor: '#e8e8e8',
+                                                height: '1px',
+                                            }}></div>
 
-                                                    <BookMarkButton data={item}/>
+                                            <BookMarkButton data={item}
+                                                            selected={bookMarked.includes(item.id) ? true : false}/>
 
-                                                </CardActions>
-                                            </Card>
-                                        </Grid>
-                                )
-                            }
-                        )}
-                    </Grid>
-                    <br/>
-                </Container>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            )
+                        }
+                    )}
+                </Grid>
+                <br/>
+            </Container>
         )
     }
 }

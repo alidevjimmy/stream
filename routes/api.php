@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Api'] , function(){
         Route::post('/register' , 'AuthController@register');
         Route::post('/login' , 'AuthController@login');
         Route::get('/advertisings' , 'AdvertisingController@index');
+        Route::get('/advertisingsAuth' , 'AdvertisingController@indexAuth')->middleware('auth:api');
         Route::get('/advertisings/{id}' , 'AdvertisingController@show');
         Route::get('/category/{id}' , 'CategoryController@showAds');
         Route::get('/search' , 'AdvertisingController@search');
@@ -33,5 +34,8 @@ Route::group(['namespace' => 'Api'] , function(){
         Route::get('/degrees' , 'DegreeController@show');
         Route::post('/verification' , 'VerificationController@check')->middleware('auth:api');
         Route::post('/changephone' , 'VerificationController@changephone')->middleware('auth:api');
+        Route::post('/changephone' , 'VerificationController@changephone')->middleware('auth:api');
+        Route::post('/bookmark' , 'AdvertisingController@bookmark')->middleware('auth:api');
+        Route::post('/unBookmark' , 'AdvertisingController@unBookmark')->middleware('auth:api');
     });
 });
